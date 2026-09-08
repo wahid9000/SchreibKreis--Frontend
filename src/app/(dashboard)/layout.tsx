@@ -9,10 +9,13 @@ import {
 } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
-  children,
+  admin,
+  user,
 }: {
-  children: React.ReactNode;
+  admin: React.ReactNode;
+  user: React.ReactNode;
 }) {
+  const isAdmin = true; //TODO: Replace with role check logic
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -26,8 +29,15 @@ export default function DashboardLayout({
           </Button>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          {children}
-          <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+          {isAdmin ? (
+            <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min">
+              {admin}
+            </div>
+          ) : (
+            <div className="min-h-screen flex-1 rounded-xl bg-muted/50 md:min-h-min">
+              {user}
+            </div>
+          )}
         </div>
       </SidebarInset>
     </SidebarProvider>

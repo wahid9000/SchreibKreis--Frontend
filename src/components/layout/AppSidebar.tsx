@@ -35,19 +35,19 @@ export type NavigationItem = {
 const data = {
   primaryNav: [
     {
+      title: "Analytics",
+      url: "/admin-dashboard/analytics",
+      icon: LayoutDashboard,
+    },
+    {
       title: "Create New Blog",
-      url: "/dashboard/create-blog",
+      url: "/admin-dashboard/create-blog",
       icon: FileEdit,
     },
     {
       title: "All blogs",
-      url: "/dashboard/all-blogs",
+      url: "/admin-dashboard/all-blogs",
       icon: FileText,
-    },
-    {
-      title: "Analytics",
-      url: "/dashboard/analytics",
-      icon: LayoutDashboard,
     },
   ],
   managementNav: [{ title: "Settings", url: "/settings", icon: Settings }],
