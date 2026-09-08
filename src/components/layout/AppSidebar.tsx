@@ -57,6 +57,7 @@ export function AppSidebar({
 }: { user: { role: string } } & React.ComponentProps<typeof Sidebar>) {
   const isAdmin = user.role === "admin"; //TODO: After making the user info dynamic, replace this with actual role check logic
   const primaryNav = isAdmin ? adminRoutes : userRoutes;
+  const LinkHref = isAdmin ? "/admin-dashboard" : "/dashboard";
 
   return (
     <Sidebar {...props}>
@@ -64,7 +65,7 @@ export function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
+              <Link href={LinkHref}>
                 <span className="flex size-8 items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground">
                   S
                 </span>
