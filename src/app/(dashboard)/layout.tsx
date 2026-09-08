@@ -15,10 +15,11 @@ export default function DashboardLayout({
   admin: React.ReactNode;
   user: React.ReactNode;
 }) {
-  const isAdmin = true; //TODO: Replace with role check logic
+  const userInfo = { role: "admin" }; //TODO: Replace with actual user info
+  const isAdmin = userInfo.role === "admin";
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={userInfo} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center justify-between border-b px-4">
           <SidebarTrigger className="-ml-1" />

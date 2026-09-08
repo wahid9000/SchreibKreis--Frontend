@@ -1,17 +1,10 @@
 import * as React from "react";
 import Link from "next/link";
-import {
-  FileEdit,
-  FileText,
-  LayoutDashboard,
-  LucideProps,
-  Settings,
-} from "lucide-react";
-
+import { LucideProps } from "lucide-react";
+import { adminRoutes } from "@/routes/adminRoutes";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -22,6 +15,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { userRoutes } from "@/routes/userRoutes";
 
 export type NavigationItem = {
   title: string;
@@ -32,32 +26,7 @@ export type NavigationItem = {
   badge?: string | number;
 };
 
-const data = {
-  primaryNav: [
-    {
-      title: "Analytics",
-      url: "/admin-dashboard/analytics",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "Create New Blog",
-      url: "/admin-dashboard/create-blog",
-      icon: FileEdit,
-    },
-    {
-      title: "All blogs",
-      url: "/admin-dashboard/all-blogs",
-      icon: FileText,
-    },
-  ],
-  managementNav: [{ title: "Settings", url: "/settings", icon: Settings }],
-};
-
-function NavigationItems({
-  items,
-}: {
-  items: (typeof data.primaryNav)[number][];
-}) {
+function NavigationItems({ items }: { items: NavigationItem[] }) {
   return (
     <SidebarMenu>
       {items.map((item: NavigationItem) => (
@@ -82,7 +51,13 @@ const brand = {
   description: "Writer workspace",
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  user,
+  ...props
+}: { user: { role: string } } & React.ComponentProps<typeof Sidebar>) {
+  const isAdmin = user.role === "admin"; //TODO: After making the user info dynamic, replace this with actual role check logic
+  const primaryNav = isAdmin ? adminRoutes : userRoutes;
+
   return (
     <Sidebar {...props}>
       <SidebarHeader className="border-b">
@@ -108,28 +83,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarGroupLabel>Workspace</SidebarGroupLabel>
           <SidebarGroupContent>
-            <NavigationItems items={data.primaryNav} />
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Manage</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <NavigationItems items={data.managementNav} />
+            <NavigationItems items={primaryNav} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="border-t">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/">
-                <span className="size-2 rounded-full bg-emerald-500" />
-                <span>View live site</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
