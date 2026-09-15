@@ -2,5 +2,5 @@ import { createAuthClient } from "better-auth/react";
 export const authClient = createAuthClient({
   /** The base URL of the server (optional if you're using the same domain) */
   // baseURL: "https://blog-application-ten-omega.vercel.app"
-  baseURL: "http://localhost:5000",
+  baseURL: process.env.SERVER_API || "http://localhost:5000",
 });
